@@ -7,11 +7,6 @@ function Singup() {
 
     const history = useHistory()
 
-    const validateButton = ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(value)
-        
-    }
-
     useEffect(() => {
         if (username.length === 0) {
             return setIsDisabled(true);
@@ -28,7 +23,8 @@ function Singup() {
                     type="text" 
                     id='username' 
                     alt='john doe'
-                    onChange={validateButton}
+                    onChange={({target: {value}}: React.ChangeEvent<HTMLInputElement>) => 
+                    setUsername(value)}
                 />
                 <button 
                     disabled={isDisabled}
