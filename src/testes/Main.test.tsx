@@ -5,14 +5,15 @@ import App from '../pages/Main';
 import renderWithRouter from './renderWithRouter';
 import MockAdapter from "axios-mock-adapter"
 import axios from "axios";
-import { firstGet } from './MainMock';
+import { firstGet, postResult, postSend, secondGet } from './MainMock';
 
 const axiosMock = new MockAdapter(axios)
 
 describe('Testing Main', () => { 
-
+const url = "https://dev.codeleap.co.uk/careers/"
     beforeEach(() => {
       jest.useFakeTimers('modern').setSystemTime(new Date("2023-04-15T03:54:53.795233Z"))
+      axiosMock.onGet(url, firstGet)
     })
 
     it('test if you can\t create post without title and content', async () => {
@@ -32,14 +33,14 @@ describe('Testing Main', () => {
    it('test if you can\t create post without title', async () => {
     renderWithRouter(App)
     const createButton = await screen.findAllByRole('button', {name: /create/i})
-    const contentInput = await screen.findByPlaceholderText(/Hello world/i)
+    const contentInput = await screen.findByPlaceholderText(/Content here/i)
     userEvent.type(contentInput, 'content')
     expect(createButton).toBeDisabled()
    })
    
    it('test if you call api', async () => {
-    axiosMock.onGet('https://dev.codeleap.co.uk/careers/', firstGet)
-    expect("https://dev.codeleap.co.uk/careers/").toBeCalled()
+    renderWithRouter(App)
+    expect(url).toBeCalled()
     const titlePost = await screen.findByRole('heading', {level: 2, name: "aasdsa" })
     expect(titlePost).toBeInTheDocument()
     const username = await screen.findByText("garrafa")
@@ -49,38 +50,52 @@ describe('Testing Main', () => {
    }) 
 
    it('test if receive hour with a year of difference', async () => {
-    axiosMock.onGet('https://dev.codeleap.co.uk/careers/', firstGet)
+    renderWithRouter(App)
     const timeText = await screen.findByText("1 year ago")
     expect(timeText).toBeInTheDocument()
    })
 
    it('test if receive hour with a mouth of difference', async () => {
-    axiosMock.onGet('https://dev.codeleap.co.uk/careers/', firstGet)    
+    renderWithRouter(App)    
     const timeText = await screen.findByText("1 mouth ago")
     expect(timeText).toBeInTheDocument()
    })
 
    it('test if receive hour with a day of difference', async () => {
-    axiosMock.onGet('https://dev.codeleap.co.uk/careers/', firstGet)
+    renderWithRouter(App)
     const timeText = await screen.findByText("1 day ago")
     expect(timeText).toBeInTheDocument()
    })
 
    it('test if receive hour with a hour of difference', async () => {
-    axiosMock.onGet('https://dev.codeleap.co.uk/careers/', firstGet)
+    renderWithRouter(App)
     const timeText = await screen.findByText("1 hour ago")
     expect(timeText).toBeInTheDocument()
    })
 
    it('test if receive hour with a minute of difference', async () => {
-    axiosMock.onGet('https://dev.codeleap.co.uk/careers/', firstGet)
+    renderWithRouter(App)
     const timeText = await screen.findByText("27 minutes ago")
     expect(timeText).toBeInTheDocument()
    })
 
    it('test if receive hour with a second of difference', async () => {
-    axiosMock.onGet('https://dev.codeleap.co.uk/careers/', firstGet)
+    renderWithRouter(App)
     const timeText = await screen.findByText("1 second ago")
     expect(timeText).toBeInTheDocument()
+   })
+
+   it("test if you can create your post",async () => {
+    renderWithRouter(App)
+    const titleInput = await screen.findByPlaceholderText(/Hello world/i)
+    userEvent.type(titleInput, 'title')
+    const contentInput = await screen.findByPlaceholderText(/Content here/i)
+    userEvent.type(contentInput, 'content')
+    const createButton = await screen.findAllByRole('button', {name: /create/i})
+    axiosMock.onPost(url, postSend).reply(201, postResult)
+    axiosMock.onGet(url, secondGet)
+    userEvent.click(createButton as any)
+    const titlePost = await screen.findByText('title')
+    expect(titlePost).toBeInTheDocument()
    })
 })
