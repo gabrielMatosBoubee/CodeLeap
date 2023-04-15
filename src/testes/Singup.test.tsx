@@ -1,7 +1,7 @@
 import React from 'react';
 import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
-import App from '../App';
+import App from '../pages/Singup';
 import renderWithRouter from './renderWithRouter';
 
 describe('Testing Singup', () => {
