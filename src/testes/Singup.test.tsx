@@ -1,4 +1,5 @@
 import React from 'react';
+import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import App from '../App';
 import renderWithRouter from './renderWithRouter';
@@ -9,4 +10,13 @@ describe('Testing Singup', () => {
         const singUpButton = screen.getByRole('button', {name: /enter/i})
         expect(singUpButton).toBeDisabled()
     });
+    
+    it('test button works right', async () => {
+        const { history } = renderWithRouter(<App />)
+        const input = await screen.findByAltText(/john doe/)
+        userEvent.type(input, 'Gabriel')
+        const singUpButton = screen.getByRole('button', {name: /enter/i})
+        userEvent.click(singUpButton)
+        expect(history.location.pathname).toBe('/careers')
+    })
 })
