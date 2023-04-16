@@ -1,0 +1,11 @@
+version: 'version'
+services:
+  frontend:
+    build: ./
+    ports:
+      - 3000:3000
+    platform: linux/x86_64
+    working_dir: /frontend
+    command: start
+    volumes:
+      - ./src:/frontend/src
