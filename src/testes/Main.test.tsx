@@ -106,7 +106,9 @@ const urlGet = "/careers"
 
    it("test if you can update your post", async () => {
     renderWithRouter(App);
-    const updateButton = screen.getByTestId('update-button');
+    axiosMock.restore();
+    axiosMock.onGet(urlGet, secondGet);
+    const updateButton = screen.getByTestId('update-button-6652');
     userEvent.click(updateButton);
     const titleUpdate = screen.getByTestId('update-title');
     userEvent.type(titleUpdate, 'title');
@@ -119,5 +121,19 @@ const urlGet = "/careers"
     userEvent.click(saveButton)
     const title = await screen.findByText(/strin/i)
     expect(title).toBeInTheDocument()
+   })
+
+   it("test if you can delete your post", async () => {
+    renderWithRouter(App);
+    axiosMock.restore();
+    axiosMock.onGet(urlGet, secondGet);
+    const deleteButton = screen.getByTestId('delete-button-6652');
+    userEvent.click(deleteButton);
+    axiosMock.onDelete("/careers/6652").reply(204)
+    const buttonDelete = await screen.findByRole('button', {name: /delete/i})
+    axiosMock.restore()
+    axiosMock.onGet(urlGet, firstGet)
+    userEvent.click(buttonDelete)
+    expect(screen.queryByText(/string/i)).not.toBeInTheDocument();
    })
 })
