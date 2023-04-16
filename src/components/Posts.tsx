@@ -1,8 +1,9 @@
 import React from 'react';
-import { IApi, IPost, IPosts } from '../interfaces/posts';
+import { IPost, IPosts } from '../interfaces/posts';
 import usePost from './usePost';
 import { useSelector } from 'react-redux';
 import DeleteAndUpdate from './DeleteAndUpdate';
+import Pagination from './Pagination';
 
 
 function Posts() {
@@ -36,7 +37,7 @@ function Posts() {
                <div key={id}>
                 <h2>{title}</h2>
                 {username === nickname ? <>
-                <DeleteAndUpdate />
+                <DeleteAndUpdate id={id} />
                 </> : <></>}
                 <div>
                   <p>{`@${username}`}</p>
@@ -46,6 +47,7 @@ function Posts() {
                </div> 
             ) 
             )}
+            { data?.count ? <Pagination count={data?.count}/> : <></>}
         </div>
     );
 }

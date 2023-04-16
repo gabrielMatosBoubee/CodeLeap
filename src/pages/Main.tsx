@@ -1,6 +1,7 @@
 import React from 'react';
 import Posts from '../components/Posts';
 import CreatePost from '../components/CreatePost';
+import DeleteAndUpdate from '../components/DeleteAndUpdate';
 
 function Main() {
     return (
