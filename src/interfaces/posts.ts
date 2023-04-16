@@ -7,11 +7,13 @@ export interface IPost {
 }
 
 export interface IPosts {
-    status: number,
-    data: {
-        count: number,
+       data: { count: number,
         next: string | null,
         previous: string | null,
         results: Array<IPost>
-    }
+      }
+}
+
+export interface IApi extends IPosts {
+  status: number,
 }

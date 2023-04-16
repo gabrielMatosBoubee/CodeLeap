@@ -1,19 +1,14 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { IPost, IPosts } from '../interfaces/posts';
+import React from 'react';
+import { IApi, IPost, IPosts } from '../interfaces/posts';
+import usePost from './usePost';
+import { useSelector } from 'react-redux';
+import DeleteAndUpdate from './DeleteAndUpdate';
+
 
 function Posts() {
-    const [posts, setPosts] = useState([] as Array<IPost>)
+    const { nickname } = useSelector((globalState: any) => globalState.nickname)
 
-    const componentDidMount = async () => {
-        const result = axios.create({baseURL: "https://dev.codeleap.co.uk/"})
-        const { data } = await result.get("/careers") as IPosts
-        setPosts(data.results)
-    }
-
-    useEffect(() => {
-        componentDidMount()
-    }, [])
+    const { data } = usePost() as IPosts
 
     const convertTime = (createTime: Date) => {
         try {
@@ -36,11 +31,13 @@ function Posts() {
 
     return (
         <div>
-            {posts.map(({id, username, created_datetime, title, content}: IPost) =>
+            {data?.results.map(({id, username, created_datetime, title, content}: IPost) =>
             (
-
                <div key={id}>
                 <h2>{title}</h2>
+                {username === nickname ? <>
+                <DeleteAndUpdate />
+                </> : <></>}
                 <div>
                   <p>{`@${username}`}</p>
                   <p>{convertTime(created_datetime)}</p>

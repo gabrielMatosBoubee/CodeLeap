@@ -1,10 +1,26 @@
 import React, { useEffect, useState } from 'react';
+import usePost from './usePost';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function CreatePost() {
 
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [isDisabled, setIsDisabled] = useState(true);
+
+    const { nickname } = useSelector((globalState: any) => globalState.nickname)
+
+    const { refetch } = usePost();
+
+    const createPost = async () => {
+       await axios.post("https://dev.codeleap.co.uk/careers", {
+            username: nickname,
+            title,
+            content
+        })
+        refetch()
+    }
 
     useEffect(() => {
         if(content.length > 0 && title.length > 0) {
@@ -33,7 +49,12 @@ function CreatePost() {
                 placeholder='Content here' 
                 onChange={({target: {value}}) => setContent(value)}
             />
-            <button type='button' disabled={isDisabled}>Create</button>
+            <button 
+                type='button' 
+                disabled={isDisabled} 
+                onClick={createPost}>
+                    Create
+            </button>
         </div>
     );
 }
