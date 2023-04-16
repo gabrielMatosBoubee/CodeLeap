@@ -24,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -46,7 +46,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.21.4",
     "@types/react-router-dom": "^5.3.3",
     "axios-mock-adapter": "^1.21.4"
+  },
+  "moduleNameMapper": {
+    "axios": "axios/dist/node/axios.cjs"
   }
 }
