@@ -26,7 +26,6 @@ function Singup() {
                     <input 
                         type="text" 
                         id='username' 
-                        alt='john doe'
                         placeholder='john doe'
                         className={style.name}
                         onChange={({target: {value}}: React.ChangeEvent<HTMLInputElement>) => 
