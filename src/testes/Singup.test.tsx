@@ -13,7 +13,7 @@ describe('Testing Singup', () => {
     
     it('test button works right', async () => {
         const { history } = renderWithRouter(<App />)
-        const input = await screen.findByAltText(/john doe/)
+        const input = await screen.findByPlaceholderText(/john doe/)
         userEvent.type(input, 'Gabriel')
         const singUpButton = screen.getByRole('button', {name: /enter/i})
         userEvent.click(singUpButton)
