@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import style from '../styles/Singup.module.css'
+import { useDispatch } from 'react-redux';
+import { setNickName } from '../actions';
 
 function Singup() {
     const [username, setUsername] = useState('');
     const [isDisabled, setIsDisabled] = useState(true);
+
+    const dispatch = useDispatch();
 
     const history = useHistory()
 
@@ -35,7 +39,10 @@ function Singup() {
                         disabled={isDisabled}
                         type='button'
                         className={style.button}
-                        onClick={() => history.push('/careers')}>
+                        onClick={() => {
+                            dispatch(setNickName(username))
+                            history.push('/careers')
+                            }}>
                             ENTER
                     </button>
                 </div>
