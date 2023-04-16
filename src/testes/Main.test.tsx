@@ -18,6 +18,7 @@ describe('Testing Main', () => {
     afterEach(async () => {
         axiosMock.reset()
     })
+
     it('test if you call api', async () => {
      renderWithRouter(<App />)
      const titlePost = await screen.findByRole('heading', {level: 2, name: "aasdsa" })
@@ -103,35 +104,36 @@ describe('Testing Main', () => {
    })
 
    it("test if you can update your post", async () => {
-    renderWithRouter(<App />);
     axiosMock.reset();
     axiosMock.onGet().reply(200, secondGet)
-    const updateButton = screen.getByTestId('update-button-6652');
+    renderWithRouter(<App />);
+    const updateButton = await screen.findByTestId('update-button-6652');
     userEvent.click(updateButton);
-    const titleUpdate = screen.getByTestId('update-title');
+    const titleUpdate = await screen.findByTestId('update-title');
     userEvent.type(titleUpdate, 'title');
-    const contentUpdate = screen.getByTestId('update-content');
+    const contentUpdate = await screen.findByTestId('update-content');
     userEvent.type(contentUpdate, 'content');
     axiosMock.onPatch().reply(200, patchResult)
     const saveButton = await screen.findByRole('button', {name: /save/i})
+    userEvent.click(saveButton)
     axiosMock.reset()
     axiosMock.onGet().reply(200, updateGet)
-    userEvent.click(saveButton)
     const title = await screen.findByText(/strin/i)
     expect(title).toBeInTheDocument()
    })
 
    it("test if you can delete your post", async () => {
+     axiosMock.reset();
+     axiosMock.onGet().reply(200, secondGet)
     renderWithRouter(<App />);
-    axiosMock.reset();
-    axiosMock.onGet().reply(200, secondGet)
-    const deleteButton = screen.getByTestId('delete-button-6652');
+    const text = screen.queryByText(/string/i)
+    const deleteButton = await screen.findByTestId('delete-button-6652');
     userEvent.click(deleteButton);
     axiosMock.onDelete().reply(204)
     const buttonDelete = await screen.findByRole('button', {name: /delete/i})
+    userEvent.click(buttonDelete)
     axiosMock.restore()
     axiosMock.onGet().reply(200, firstGet)
-    userEvent.click(buttonDelete)
-    expect(screen.queryByText(/string/i)).not.toBeInTheDocument();
+    expect(text).not.toBeInTheDocument();
    })
 })
