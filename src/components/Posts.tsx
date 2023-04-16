@@ -1,5 +1,5 @@
 import React from 'react';
-import { IPost, IPosts } from '../interfaces/posts';
+import { IPost } from '../interfaces/posts';
 import usePost from './usePost';
 import { useSelector } from 'react-redux';
 import DeleteAndUpdate from './DeleteAndUpdate';

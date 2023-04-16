@@ -33,6 +33,10 @@
     line-height: 19px;
 }
 
+.button:disabled {
+    color: #777777;
+}
+
 .submit { 
     position: relative;
     display: flex;
