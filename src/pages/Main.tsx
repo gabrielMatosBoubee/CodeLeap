@@ -1,16 +1,18 @@
 import React from 'react';
 import Posts from '../components/Posts';
 import CreatePost from '../components/CreatePost';
-import DeleteAndUpdate from '../components/DeleteAndUpdate';
+import style from '../styles/Main.module.css'
 
 function Main() {
     return (
-        <div>
-            <header>
-                <h2>CodeLeap Network</h2>
+        <div className={style.main}>
+            <header className={style.header}>
+                <h2 className={style.title}>CodeLeap Network</h2>
             </header>
-            <CreatePost />
-            <div>
+            <div className={style.createPost}>
+              <CreatePost />
+            </div>
+            <div className={style.posts}>
                 <Posts />
             </div>
         </div>

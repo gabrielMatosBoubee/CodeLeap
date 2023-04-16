@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import usePost from './usePost';
 import axios from 'axios';
+import style from '../styles/CreatePost.module.css'
 import { useSelector } from 'react-redux';
 
 function CreatePost() {
@@ -29,12 +30,15 @@ function CreatePost() {
     }, [content, title])
 
     return (
-        <div>
+        <div className={style.createPostBorder}>
+            <div className={style.createPost}>
+
             <h2>What's on your mind?</h2>
             <label htmlFor='title'>
                 Title
             </label>
             <input 
+                className={style.titleInput}
                 type="text" 
                 id="title" 
                 placeholder='Hello world'
@@ -44,17 +48,20 @@ function CreatePost() {
                 Content
             </label>
             <input 
+                className={style.content}
                 type="text" 
                 id="content" 
                 placeholder='Content here' 
                 onChange={({target: {value}}) => setContent(value)}
             />
             <button 
+                className={style.button}
                 type='button' 
                 disabled={isDisabled} 
                 onClick={createPost}>
                     Create
             </button>
+            </div>
         </div>
     );
 }

@@ -6,25 +6,14 @@ import PopUp from './PopUp';
 import DeletePopUpContent from './DeletePopUpContent';
 import { setIsPopUpOpen } from '../actions';
 import UpdatePopUpContent from './UpdatePopUpContent';
+import style from '../styles/DeleteAndUpdate.module.css'
 
 function DeleteAndUpdate({ id }: any) {
     const [type, setType] = useState('')
     const { isPopUpOpen } = useSelector((globalState: any) => globalState.popUp)
     const dispatch = useDispatch();
     return (
-        <div style={{background: 'red'}}>
-            <img
-                data-testid={`update-button-${id}`} 
-                src={updateIcon} 
-                alt="" 
-                onClick={
-                () => {
-                    setType('update')
-                    dispatch(setIsPopUpOpen(true))
-                }
-                }/>
-                {isPopUpOpen && type === "update" ? 
-                <PopUp><UpdatePopUpContent /></PopUp> : <></>}
+        <div className={style.icons}>
             <img 
                 data-testid={`delete-button-${id}`}
                 src={deleteIcon} 
@@ -33,9 +22,21 @@ function DeleteAndUpdate({ id }: any) {
                     setType('delete')
                     dispatch(setIsPopUpOpen(true))
                 }
-        } />
+            } />
             {isPopUpOpen && type === "delete" ? 
              <PopUp><DeletePopUpContent id={id} /></PopUp> : <></>}
+             <img
+                 data-testid={`update-button-${id}`} 
+                 src={updateIcon} 
+                 alt="" 
+                 onClick={
+                 () => {
+                     setType('update')
+                     dispatch(setIsPopUpOpen(true))
+                 }
+                 }/>
+                 {isPopUpOpen && type === "update" ? 
+                 <PopUp><UpdatePopUpContent /></PopUp> : <></>}
         </div>
     );
 }
