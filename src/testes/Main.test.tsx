@@ -3,14 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { screen } from '@testing-library/react';
 import App from '../pages/Main';
 import renderWithRouter from './renderWithRouter';
-import { firstGet, patch, patchResult, postResult, postSend, secondGet, updateGet } from './MainMock';
+import { firstGet, patchResult, postResult, secondGet, updateGet } from './MainMock';
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 const axiosMock = new MockAdapter(axios)
 
 describe('Testing Main', () => { 
-const urlGet = "https://dev.codeleap.co.uk/careers"
     beforeEach(async () => {
       jest.useFakeTimers('modern').setSystemTime(new Date("2023-04-15T04:54:53.795233Z"))
       axiosMock.onGet().reply(200, firstGet)
@@ -95,10 +94,10 @@ const urlGet = "https://dev.codeleap.co.uk/careers"
     const contentInput = await screen.findByPlaceholderText(/Content here/i)
     userEvent.type(contentInput, 'content')
     const createButton = await screen.findByRole('button', {name: /create/i})
-    axiosMock.onPost(urlGet, postSend).reply(201, postResult)
+    axiosMock.onPost().reply(201, postResult)
+    userEvent.click(createButton)
     axiosMock.reset()
     axiosMock.onGet().reply(200, secondGet)
-    userEvent.click(createButton)
     const titlePost = await screen.findByText('title')
     expect(titlePost).toBeInTheDocument()
    })
