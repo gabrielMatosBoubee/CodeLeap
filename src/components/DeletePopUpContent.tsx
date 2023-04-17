@@ -11,7 +11,7 @@ function DeletePopUpContent({id}: any) {
    const dispatch = useDispatch()
 
    const deletePost = async () => {
-    await axios.delete(`http://dev.codeleap.co.uk/careers/${id}/`)
+    await axios.delete(`https://dev.codeleap.co.uk/careers/${id}/`)
     dispatch(setIsPopUpOpen(false))
     refetch()
    }

@@ -7,7 +7,7 @@ function usePost():UseQueryResult {
     const { page } = useSelector((globalState: any) => globalState.pagination)
 
     const fetch = async () => {
-        const result = axios.create({baseURL: "http://dev.codeleap.co.uk/"})
+        const result = axios.create({baseURL: "https://dev.codeleap.co.uk/"})
         const { data } = await result
         .get(`/careers/?limit=10&offset=${10 * (page - 1)}/`) as IApi
         return data
