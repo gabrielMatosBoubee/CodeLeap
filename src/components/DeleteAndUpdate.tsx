@@ -36,7 +36,7 @@ function DeleteAndUpdate({ id }: any) {
                  }
                  }/>
                  {isPopUpOpen && type === "update" ? 
-                 <PopUp><UpdatePopUpContent /></PopUp> : <></>}
+                 <PopUp><UpdatePopUpContent id={id} /></PopUp> : <></>}
         </div>
     );
 }
