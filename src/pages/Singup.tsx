@@ -41,6 +41,7 @@ function Singup() {
                         className={style.button}
                         onClick={() => {
                             dispatch(setNickName(username))
+                            localStorage.setItem('nickname', username)
                             history.push('/careers')
                             }}>
                             ENTER
