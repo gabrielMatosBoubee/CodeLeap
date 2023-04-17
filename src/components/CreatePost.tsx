@@ -15,7 +15,7 @@ function CreatePost() {
     const { refetch } = usePost();
 
     const createPost = async () => {
-       await axios.post("https://dev.codeleap.co.uk/careers", {
+       await axios.post("http://dev.codeleap.co.uk/careers/", {
             username: nickname,
             title,
             content

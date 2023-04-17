@@ -15,7 +15,7 @@ function UpdatePopUpContent({id}: any) {
     const dispatch = useDispatch()
  
     const patchPost = async () => {
-     await axios.patch(`https://dev.codeleap.co.uk/careers/${id}`, {
+     await axios.patch(`http://dev.codeleap.co.uk/careers/${id}/`, {
         title, content
      })
      dispatch(setIsPopUpOpen(false))
